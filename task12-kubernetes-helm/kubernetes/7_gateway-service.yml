@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway-service-deployment
+  labels:
+    app: gateway-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway-service
+  template:
+    metadata:
+      labels:
+        app: gateway-service
+    spec:
+      containers:
+        - name: gateway-service
+          image: treladev/gateway-service:t12
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONFIG_URI
+
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_HOST
+
+            - name: SPRING_CLOUD_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_PORT
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-service
+spec:
+  selector:
+    app: gateway-service
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080

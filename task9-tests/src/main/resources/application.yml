@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/library
+      database: library
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        cache:
+          use_second_level_cache: true
+          region:
+            factory_class: jcache
+          use_query_cache: true
+        javax:
+          cache:
+            provider: org.ehcache.jsr107.EhcacheCachingProvider
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+liquibase:
+  enabled: true
+  change-log: classpath:db/changelog/db.changelog-master.yaml
+  contexts: prod
+
+jwt:
+  secret: mySuperSecretKeyThatIsAtLeast32CharactersLong
+
+logging:
+  level:
+    org.springframework.security: DEBUG

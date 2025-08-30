@@ -1,0 +1,332 @@
+{
+	"info": {
+		"_postman_id": "d5334633-0b0b-495a-b2c2-3ffbf5c6af52",
+		"name": "Library3000Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45203292"
+	},
+	"item": [
+		{
+			"name": "Add new book.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTM2NDEsImV4cCI6MTc0ODk1NzI0MX0.yO_5kZ4tzSdNSPrS00DUJRCP7ZM3UWYnHr-ASSKQQHs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Murder on the Orient Express\",\r\n  \"description\": \"Hercule Poirot investigates a murder on a snowbound train.\",\r\n  \"pages\": 256,\r\n  \"rating\": 3.3,\r\n  \"authors\": [\r\n    { \"name\": \"Han Solo\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Fantasy\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all books.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTI2NDAsImV4cCI6MTc0ODk1NjI0MH0.mMu9EGW1oLnz8nJS-Alv_PjSG4sD2qTBNqbZdx2U6cc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by id.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search books.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTM2NDEsImV4cCI6MTc0ODk1NzI0MX0.yO_5kZ4tzSdNSPrS00DUJRCP7ZM3UWYnHr-ASSKQQHs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/search?keyword=her",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "her"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update book.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTM2NDEsImV4cCI6MTc0ODk1NzI0MX0.yO_5kZ4tzSdNSPrS00DUJRCP7ZM3UWYnHr-ASSKQQHs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"UPDATE\",\r\n  \"description\": \"UPDATE\",\r\n  \"pages\": 100,\r\n  \"rating\": 5.00,\r\n  \"authors\": [\r\n    { \"name\": \"UPDATED AUTHOR\" },\r\n    { \"name\": \"UPDATEDAUTHOR2\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Mystery\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book.",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Cover Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTI2NDAsImV4cCI6MTc0ODk1NjI0MH0.mMu9EGW1oLnz8nJS-Alv_PjSG4sD2qTBNqbZdx2U6cc",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "coverImage",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/1/cover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cover Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJleGFtcGxlVXNlcjMzIiwicm9sZXMiOiJST0xFX1VTRVIiLCJpYXQiOjE3NDg5NTM2NDEsImV4cCI6MTc0ODk1NzI0MX0.yO_5kZ4tzSdNSPrS00DUJRCP7ZM3UWYnHsr-ASSKQQHs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/1/cover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"exampleUser33\",\r\n  \"password\": \"atLeast8CharacterPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"exampleUser33\",\r\n  \"password\": \"atLeast8CharacterPassword\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

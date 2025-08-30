@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "5bd67a48-14d3-4a8c-80c3-122660934eea",
+		"name": "Library3000Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45203292"
+	},
+	"item": [
+		{
+			"name": "Add new book.",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Murder on the Orient Express\",\r\n  \"description\": \"Hercule Poirot investigates a murder on a snowbound train.\",\r\n  \"pages\": 256,\r\n  \"rating\": 3.3,\r\n  \"authors\": [\r\n    { \"name\": \"Han Solo\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Fantasy\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all books.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by id.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search books.",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/search?keyword=stephen",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "stephen"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update book.",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"UPDATE\",\r\n  \"description\": \"UPDATE\",\r\n  \"pages\": 100,\r\n  \"rating\": 5.00,\r\n  \"authors\": [\r\n    { \"name\": \"UPDATED AUTHOR\" },\r\n    { \"name\": \"UPDATEDAUTHOR2\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Mystery\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book.",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/books/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Cover Image",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "coverImage",
+							"type": "file",
+							"src": "/C:/Users/gaunt/Downloads/Test Book Cover.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "/api/books/1/cover",
+					"path": [
+						"api",
+						"books",
+						"1",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cover Image",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

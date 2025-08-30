@@ -1,0 +1,28 @@
+[versions]
+spring = "6.2.3"
+jackson = "2.18.2"
+junit = "5.10.0"
+shadow-plugin = "8.1.1"
+aspectj = "1.9.23"
+postgresql = "42.7.3"
+flyway = "11.8.0"
+lombok = "1.18.30"
+h2 = "2.2.224"
+[libraries]
+spring-context = { module = "org.springframework:spring-context", version.ref = "spring" }
+jackson-csv = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-csv", version.ref = "jackson" }
+spring-aop = { module = "org.springframework:spring-aop", version.ref = "spring" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "spring" }
+spring-jdbc = {module = "org.springframework:spring-jdbc", version.ref = "spring"}
+aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+
+
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow-plugin" }

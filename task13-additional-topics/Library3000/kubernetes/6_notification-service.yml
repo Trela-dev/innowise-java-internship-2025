@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-deployment
+  labels:
+    app: notification-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service
+  template:
+    metadata:
+      labels:
+        app: notification-service
+    spec:
+      containers:
+        - name: notification-service
+          image: treladev/notification-service:t13
+          ports:
+            - containerPort: 9010
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONFIG_URI
+
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_HOST
+
+            - name: SPRING_CLOUD_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_PORT
+
+            - name: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: notification-service
+spec:
+  selector:
+    app: notification-service
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 9010
+      targetPort: 9010

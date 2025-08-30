@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: book-service-deployment
+  labels:
+    app: book-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: book-service
+  template:
+    metadata:
+      labels:
+        app: book-service
+    spec:
+      containers:
+        - name: book-service
+          image: treladev/book-service:t12
+          ports:
+            - containerPort: 8082
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONFIG_URI
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_DATASOURCE_URL_BOOK_DB
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_HOST
+            - name: SPRING_CLOUD_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_PORT
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: book-service
+spec:
+  selector:
+    app: book-service
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082

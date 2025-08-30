@@ -1,0 +1,419 @@
+{
+	"info": {
+		"_postman_id": "792429bb-9574-465d-9c8f-a51aeecf322d",
+		"name": "Library3000Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45203292"
+	},
+	"item": [
+		{
+			"name": "Add new book.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4ODE0NiwiZXhwIjoxNzU0NTg4Mzg2fQ.MpLxZAfNZ6Rg7hWodwvJ5xzcHqqMPoIrDtQi1azHLWg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Murder on the Orient Express\",\r\n  \"description\": \"Hercule Poirot investigates a murder on a snowbound train.\",\r\n  \"pages\": 256,\r\n  \"rating\": 3.3,\r\n  \"authors\": [\r\n    { \"name\": \"Han Solo\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Fantasy\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all books.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4NjczMSwiZXhwIjoxNzU0NTg3MzMxfQ.RIR5IiellVqUyMfcnI4qym5ln1gfiGKj1vkk8qi_42c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get book by id.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4NjczMSwiZXhwIjoxNzU0NTg3MzMxfQ.RIR5IiellVqUyMfcnI4qym5ln1gfiGKj1vkk8qi_42c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search books.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4NjczMSwiZXhwIjoxNzU0NTg3MzMxfQ.RIR5IiellVqUyMfcnI4qym5ln1gfiGKj1vkk8qi_42c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/search?keyword=her",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"search"
+					],
+					"query": [
+						{
+							"key": "keyword",
+							"value": "her"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update book.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4NjczMSwiZXhwIjoxNzU0NTg3MzMxfQ.RIR5IiellVqUyMfcnI4qym5ln1gfiGKj1vkk8qi_42c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"UPDATE\",\r\n  \"description\": \"UPDATE\",\r\n  \"pages\": 100,\r\n  \"rating\": 5.00,\r\n  \"authors\": [\r\n    { \"name\": \"UPDATED AUTHOR\" },\r\n    { \"name\": \"UPDATEDAUTHOR2\" }\r\n  ],\r\n  \"genre\": { \"name\": \"Mystery\" }\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete book.",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4ODM2MywiZXhwIjoxNzU0NTg4NjAzfQ.2R_Dbu761aXeHrPySunivwfbsxYEZSaAoKTBZcqNgO8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Cover Image ADMIN ONLY",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0cmVsYS1kZXYiLCJyb2xlcyI6IlJPTEVfVVNFUiIsImlhdCI6MTc1NDU4NjczMSwiZXhwIjoxNzU0NTg3MzMxfQ.RIR5IiellVqUyMfcnI4qym5ln1gfiGKj1vkk8qi_42c",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "coverImage",
+							"type": "file",
+							"src": "/C:/Users/gaunt/Downloads/Gemini_Generated_Image_ovdoqqovdoqqovdo-removebg-preview.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/books/3/cover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"3",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cover Image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiUk9MRV9BRE1JTiIsImlhdCI6MTc1NDU0Mjg1OSwiZXhwIjoxNzU0NTQzMDk5fQ.nrLZX6U0JhRxzltyjZZiMesaS1XGMGwePS-h5KNgsdQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8080/api/books/3/cover",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"books",
+						"3",
+						"cover"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register new user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"trela-dev\",\r\n  \"password\": \"atLeast8CharacterPassword\",\r\n  \"email\": \"marcin.trela.dev@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "Accept-Language",
+							"value": "en",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

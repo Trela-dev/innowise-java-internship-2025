@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V1__create_roles_and_users_tables.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 2
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V2__add_email_to_users.sql
+            relativeToChangelogFile: true

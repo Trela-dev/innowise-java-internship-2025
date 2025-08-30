@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service-deployment
+  labels:
+    app: auth-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+        - name: auth-service
+          image: treladev/auth-service:t12
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONFIG_URI
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_DATASOURCE_URL_AUTH_DB
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_HOST
+            - name: SPRING_CLOUD_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_PORT
+            - name: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-service
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081

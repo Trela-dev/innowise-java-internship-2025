@@ -1,0 +1,46 @@
+[versions]
+spring = "6.2.3"
+jackson = "2.18.2"
+junit = "5.10.0"
+shadow-plugin = "8.1.1"
+aspectj = "1.9.23"
+postgresql = "42.7.3"
+flyway = "11.8.0"
+lombok = "1.18.30"
+h2 = "2.2.224"
+hibernate = "6.6.13.Final"
+ehcache = "3.10.8"
+cache-api = "1.1.1"
+spring-boot = "3.4.5"
+spring-dependency-management = "1.1.4"
+liquibase = "4.27.0"
+
+
+[libraries]
+spring-context = { module = "org.springframework:spring-context", version.ref = "spring" }
+jackson-csv = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-csv", version.ref = "jackson" }
+spring-aop = { module = "org.springframework:spring-aop", version.ref = "spring" }
+spring-test = { module = "org.springframework:spring-test", version.ref = "spring" }
+spring-jdbc = {module = "org.springframework:spring-jdbc", version.ref = "spring"}
+spring-orm = {module = "org.springframework:spring-orm", version.ref = "spring" }
+aspectj-weaver = { module = "org.aspectj:aspectjweaver", version.ref = "aspectj" }
+postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" }
+flyway-postgresql = { module = "org.flywaydb:flyway-database-postgresql", version.ref = "flyway" }
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+hibernate-core = { module = "org.hibernate:hibernate-core", version.ref = "hibernate" }
+hibernate-jcache = { module = "org.hibernate:hibernate-jcache", version.ref = "hibernate" }
+ehcache = { module = "org.ehcache:ehcache", version.ref = "ehcache" }
+cache-api = { module = "javax.cache:cache-api", version.ref = "cache-api" }
+spring-boot-web = { module = "org.springframework.boot:spring-boot-starter-web", version.ref = "spring-boot" }
+spring-boot-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa", version.ref = "spring-boot" }
+spring-boot-validation = { module = "org.springframework.boot:spring-boot-starter-validation", version.ref = "spring-boot" }
+liquibase-core = { module = "org.liquibase:liquibase-core", version.ref = "liquibase" }
+spring-boot-mongodb = {module = "org.springframework.boot:spring-boot-starter-data-mongodb", version.ref = "spring-boot"}
+
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+
+[plugins]
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow-plugin" }
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }

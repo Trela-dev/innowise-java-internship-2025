@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-service-deployment
+  labels:
+    app: image-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: image-service
+  template:
+    metadata:
+      labels:
+        app: image-service
+    spec:
+      containers:
+        - name: image-service
+          image: treladev/image-service:t13
+          ports:
+            - containerPort: 8083
+          env:
+            - name: SPRING_CLOUD_CONFIG_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONFIG_URI
+            - name: SPRING_CLOUD_CONSUL_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_HOST
+            - name: SPRING_CLOUD_CONSUL_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_CLOUD_CONSUL_PORT
+            - name: SPRING_DATA_MONGODB_URI
+              valueFrom:
+                configMapKeyRef:
+                  name: library3000-configmap
+                  key: SPRING_DATA_MONGODB_URI
+            - name: SPRING_PROFILES_ACTIVE
+              value: k8s
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-service
+spec:
+  selector:
+    app: image-service
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083

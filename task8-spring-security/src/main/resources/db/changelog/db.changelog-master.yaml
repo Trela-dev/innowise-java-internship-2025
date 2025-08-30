@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V1__create_tables.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 2
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V2__insert_initial_data.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 3
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V3__add_unique_author_constraint.sql
+            relativeToChangelogFile: true
+
+  - changeSet:
+      id: 4
+      author: trela
+      changes:
+        - sqlFile:
+            path: changes/V4__create_roles_and_users_tables.sql
+            relativeToChangelogFile: true
+

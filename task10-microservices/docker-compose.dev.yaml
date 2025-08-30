@@ -1,0 +1,49 @@
+# Docker Compose file for development environment with Consul, PostgreSQL, and MongoDB
+#  USE  docker compose -f docker-compose.dev.yaml up -d
+services:
+  consul:
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+    command: "consul agent -dev -client=0.0.0.0"
+
+  postgres:
+    image: postgres:13
+    container_name: book-auth-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - authdata:/var/lib/postgresql/data
+
+
+  book-db:
+    image: postgres:13
+    container_name: book-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_book_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - bookdata:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongodb_data:/data/db
+
+
+volumes:
+  authdata:
+  bookdata:
+  mongodb_data:

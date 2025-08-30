@@ -1,0 +1,169 @@
+services:
+  consul:
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+    command: "consul agent -dev -client=0.0.0.0"
+    networks:
+      - library3000
+
+  book-auth-db:
+    image: postgres:13
+    container_name: book-auth-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_auth_db
+    volumes:
+      - authdata:/var/lib/postgresql/data
+    networks:
+      - library3000
+
+  book-db:
+    image: postgres:13
+    container_name: book-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_book_db
+    volumes:
+      - bookdata:/var/lib/postgresql/data
+    networks:
+      - library3000
+
+  mongo:
+    image: mongo:6.0
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - library3000
+
+  kafka:
+    image: apache/kafka:3.9.1
+    container_name: kafka
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_NUM_PARTITIONS: 3
+    healthcheck:
+      test: [ "CMD", "bash", "-c", "echo > /dev/tcp/localhost/9092" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    networks:
+      - library3000
+
+  config-server:
+    build: ./config-server
+    image: treladev/config-server:t12
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    networks:
+      - library3000
+
+  gateway-service:
+    build: ./gateway-service
+    image: treladev/gateway-service:t12
+    ports:
+      - "8080:8080"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+    networks:
+      - library3000
+
+  auth-service:
+    build: ./auth-service
+    image: treladev/auth-service:t12
+    depends_on:
+      config-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-auth-db:5432/library_auth_db
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+    restart: on-failure
+    networks:
+      - library3000
+
+  book-service:
+    build: ./book-service
+    image: treladev/book-service:t12
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-db:5432/library_book_db
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+    networks:
+      - library3000
+
+  image-service:
+    build: ./image-service
+    image: treladev/image-service:t12
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017/image-db?authSource=admin
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+    networks:
+      - library3000
+
+  notification-service:
+    build: ./notification-service
+    image: treladev/notification-service:t12
+    depends_on:
+      config-server:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+      - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka:9092
+    restart: on-failure
+    networks:
+      - library3000
+
+volumes:
+  authdata:
+  bookdata:
+  mongodb_data:
+
+networks:
+  library3000:
+    driver: bridge

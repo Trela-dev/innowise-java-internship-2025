@@ -1,0 +1,119 @@
+services:
+  consul:
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+    command: "consul agent -dev -client=0.0.0.0"
+
+  book-auth-db:
+    image: postgres:13
+    container_name: book-auth-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - authdata:/var/lib/postgresql/data
+
+
+  book-db:
+    image: postgres:13
+    container_name: book-db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=library_book_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - bookdata:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - mongodb_data:/data/db
+
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+
+
+  auth-service:
+    build: ./auth-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-auth-db:5432/library_auth_db
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+
+  book-service:
+    build: ./book-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://book-db:5432/library_book_db
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+
+
+  image-service:
+    build: ./image-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      config-server:
+        condition: service_healthy
+    environment:
+      - SPRING_CLOUD_CONFIG_URI=http://config-server:8888
+      - SPRING_DATA_MONGODB_URI=mongodb://admin:admin@mongo:27017/image-db?authSource=admin
+      - SPRING_CLOUD_CONSUL_HOST=consul
+      - SPRING_CLOUD_CONSUL_PORT=8500
+    restart: on-failure
+
+
+
+
+
+
+volumes:
+  authdata:
+  bookdata:
+  mongodb_data:
